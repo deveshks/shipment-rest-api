@@ -152,12 +152,15 @@ Error Request body:
 Assumptions and Design:
 1. I assume that every shipment will have a unique shipment name associated to it, and I use that shipment name to insert, update and search 
 the shipment in the database.
-2. The total cost will be provided as an pos
-2. I save the shipment object into a postgres database, and the microservice is installed on Heroku 
-3. I use the Python Flask library to create the microservice and flask-restful library to create the rest endpoints.
-4. I use the flask-sqlalchemy library to create Database models for the shipment object, and marshmallow library to parse and validate incoming
+2. The total cost will be provided as an positive float number with a fixed precision of 2, and the segment distances will be a list with 
+each distance being a positive float number with a fixed precision of 2. 
+3. When a new shipment is posted, the cost distribution is calculated and pushed onto the database for future gets.
+4. Existing shipments can be updated with new total cost and a new list of segment distances.
+5. I save the shipment object into a postgres database, and the microservice is installed on Heroku 
+6. I use the Python Flask library to create the microservice and flask-restful library to create the rest endpoints.
+7. I use the flask-sqlalchemy library to create Database models for the shipment object, and marshmallow library to parse and validate incoming
    JSON requests.
-5. Basic validation and sanity checks are included, such as check for missing attributes in POST and PUT requests, to check float values > 0 for
+8. Basic validation and sanity checks are included, such as check for missing attributes in POST and PUT requests, to check float values > 0 for
 cost and distance.
-6. Basic error handling for API Requests (e.g, POST on already existing object, GET on non-existing object etc.)
-7. Concurrent API requests handling is supported
+9. Basic error handling for API Requests (e.g, POST on already existing object, GET on non-existing object etc.)
+10. Concurrent API requests handling is supported

@@ -5,14 +5,14 @@ import requests
 payloadpost = {
             "shipment_name":"shipment_test",
             "total_price":150.5,
-            "segment_distances": [1.0,5.0]
+            "segment_distances": [1.2,5.4]
         }
 
 #Put payload
 payloadput = { 
             "shipment_name":"shipment_test",
             "total_price":200.75,
-            "segment_distances": [2.0,3.0]
+            "segment_distances": [2.8,3.7]
         }
 
 #Request to delete all shipments
