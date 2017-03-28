@@ -4,14 +4,14 @@ import requests
 #POST PAYLOAD
 payloadpost = {
             "shipment_name":"shipment_test",
-            "total_price":150,
+            "total_price":150.5,
             "segment_distances": [1.0,5.0]
         }
 
 #Put payload
 payloadput = { 
             "shipment_name":"shipment_test",
-            "total_price":200,
+            "total_price":200.75,
             "segment_distances": [2.0,3.0]
         }
 

@@ -26,7 +26,7 @@ class Shipment(object):
 '''Shipment Object Database Model'''
 class ShipmentModel(db.Model):
     shipment_name = db.Column(db.String, primary_key=True)
-    total_price = db.Column(db.Integer)
+    total_price = db.Column(db.Float)
     segment_distances = db.Column(db.PickleType)
     cost_breakdown = db.Column(db.PickleType)
 
@@ -52,7 +52,7 @@ class ShipmentSchema(Schema):
 
   
     shipment_name = fields.Str(required=True)
-    total_price = fields.Int(required=True,validate=validate_total_price)
+    total_price = fields.Float(required=True,validate=validate_total_price)
     segment_distances = fields.List(fields.Float(validate=validate_distance, error_messages={'invalid': 'Distances must be a float'}),required=True)
     cost_breakdown = fields.List(fields.Float())
 

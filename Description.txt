@@ -151,7 +151,8 @@ Error Request body:
 
 Assumptions and Design:
 1. I assume that every shipment will have a unique shipment name associated to it, and I use that shipment name to insert, update and search 
-the shipment in the database
+the shipment in the database.
+2. The total cost will be provided as an pos
 2. I save the shipment object into a postgres database, and the microservice is installed on Heroku 
 3. I use the Python Flask library to create the microservice and flask-restful library to create the rest endpoints.
 4. I use the flask-sqlalchemy library to create Database models for the shipment object, and marshmallow library to parse and validate incoming
