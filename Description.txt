@@ -1,0 +1,80 @@
+The following document contains the details of the API endpoints and the HTTP Microservice to store shipments.
+We have the following files and details on what they do
+
+transfix-api.py ->
+
+This contains the API's as follows. All the API's are defined and written following the standard of flask-restful package of Python Flask. 
+		
+1. GET /shipment/<shipment_name>
+Given a existing <shipment_name>, it returns the shipment object containing the following information
+
+{ 
+	"shipment_name": "Name of shipment to get",
+	"total_price": "Total price of the shipment">,
+	"segment_distances": "List of segment distances"
+	"cost_breakdown" : "Proportial Breakdown of cost per segment distance"
+}
+
+2. POST /shipment
+
+Creates a new Shipment Object given shipment details as per below
+
+Request Body
+   
+{ 
+	"shipment_name": "Name of shipment to insert",
+	"total_price": "Total price of the shipment">,
+	"segment_distances": "List of segment distances"
+
+}
+
+3. PUT /shipment
+
+ Updates an existing Shipment Object given shipment details as below
+ 
+{ 
+	"shipment_name": "Name of shipment to update",
+	"total_price": "Total price of the shipment",
+	"segment_distances": "List of segment distances"
+
+}
+
+4. DELETE /shipment
+
+Deletes all shipment objects from the database
+
+5. DELETE /shipment/<shipment_name>
+
+Deletes the shipment object for the given shipment name 
+
+Assumptions:
+1. I assume that every shipment will have a unique shipment name associated to it, and I use that shipment name to insert, update and search 
+the shipment in the database
+2. I save the database into a POSTGRES DB
+ 
+To Run the code.
+
+1. Install virtualenv
+
+$ pip install virtualenv
+
+2. Create a virtual environment for the project
+
+$ cd transfix-api
+$ virtualenv transfix-api
+
+3. Install the necessary requirements
+
+$ pip install -r requirements.txt
+
+Run the file data_generator.py to generate the data to be consumed by the API
+
+Then in two separate command lines, run vurb_api_nt.py and vurb_combined_api_nt.py
+
+Open a browser, or curl the following API call
+
+http://localhost:6000/users/x/combineddecks?pages=<numpages>&results=<numresultsperpage>&nextPageToken=1
+
+I assume we can open both 5000 and 6000 ports to run our flask servers.
+
+The final response will be saved in response.txt
