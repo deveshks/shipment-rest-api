@@ -2,4 +2,4 @@ flask
 flask_restful
 flask-sqlalchemy
 marshmallow
-psycogp2
+psycopg2
