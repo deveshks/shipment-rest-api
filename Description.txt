@@ -1,13 +1,28 @@
 The following document contains the details of the API endpoints and the HTTP Microservice to store shipments.
-We have the following files and details on what they do
+The microservice is available at https://obscure-wave-96442.herokuapp.com
 
-transfix-api.py ->
+A sequence of  API calls covering all possible endpoints are provided in apihitter.py which does the following calls in sequence
 
-This contains the API's as follows. All the API's are defined and written following the standard of flask-restful package of Python Flask. 
-		
+1. Delete all existing objects
+2. Post a new object
+3. Get the just posted object
+4. Update the object
+5. Get the just updated object
+6. Delete the objects
+
+Steps to run the API endpoint tester code.
+
+$ pip install requests
+$ python apihitter.py
+
+The details of the implemented API's as follows. All the API's are defined and written following the standard of flask-restful package of Python Flask. 
+	
 1. GET /shipment/<shipment_name>
+e.g. GET e.g. https://obscure-wave-96442.herokuapp.com/shipment/shipment_test
+
 Given a existing <shipment_name>, it returns the shipment object containing the following information
 
+Sucess Response Body: 
 { 
 	"shipment_name": "Name of shipment to get",
 	"total_price": "Total price of the shipment">,
@@ -15,7 +30,28 @@ Given a existing <shipment_name>, it returns the shipment object containing the 
 	"cost_breakdown" : "Proportial Breakdown of cost per segment distance"
 }
 
+e.g.
+
+{
+    "cost_breakdown": [
+        25.0, 
+        125.0
+    ], 
+    "segment_distances": [
+        1.0, 
+        5.0
+    ], 
+    "shipment_name": "shipment_test", 
+    "total_price": 150
+}
+
+Error Response Body:
+{
+  "Error": "Shipment with name shipment_t does not exist"
+}
+
 2. POST /shipment
+e.g POST https://obscure-wave-96442.herokuapp.com/shipment
 
 Creates a new Shipment Object given shipment details as per below
 
@@ -23,14 +59,37 @@ Request Body
    
 { 
 	"shipment_name": "Name of shipment to insert",
-	"total_price": "Total price of the shipment">,
+	"total_price": "Total price of the shipment",
 	"segment_distances": "List of segment distances"
 
 }
 
+e.g.
+
+{
+    "shipment_name": "shipment_test", 
+    "total_price": 150
+	 "segment_distances": [ 1.0,  5.0] 
+}
+
+Success Request body:
+
+{
+  "Error": "Shipment with name shipment_t created successfully created"
+}
+
+Error Request body:
+
+{
+  "Error": "Shipment with name shipment_t already exists"
+}
+
 3. PUT /shipment
+e.g PUT e.g. https://obscure-wave-96442.herokuapp.com/shipment
 
  Updates an existing Shipment Object given shipment details as below
+ 
+Request Body:
  
 { 
 	"shipment_name": "Name of shipment to update",
@@ -39,42 +98,65 @@ Request Body
 
 }
 
+e.g.
+
+{
+    "shipment_name": "shipment_test", 
+    "total_price": 200
+	 "segment_distances": [ 1.0,  4.0] 
+}
+
+Success Request body:
+
+{
+  "Error": "Shipment with name shipment_t created successfully updated"
+}
+
+Error Request body:
+
+{
+  "Error": "Shipment with name shipment_t already exists"
+}
+
+
 4. DELETE /shipment
+e.g. DELETE e.g. https://obscure-wave-96442.herokuapp.com/shipment
 
 Deletes all shipment objects from the database
 
+Success Request body:
+
+{
+  "Error": "All shipments successfully deleted"
+}
+
+
 5. DELETE /shipment/<shipment_name>
+e.g. DELETE https://obscure-wave-96442.herokuapp.com/shipment/shipment_test
 
 Deletes the shipment object for the given shipment name 
 
-Assumptions:
+Success Request body:
+
+{
+  "Error": "Shipment with name shipment_t created successfully deleted"
+}
+
+Error Request body:
+
+{
+  "Error": "Shipment with name shipment_t does not exists"
+}
+
+
+Assumptions and Design:
 1. I assume that every shipment will have a unique shipment name associated to it, and I use that shipment name to insert, update and search 
 the shipment in the database
-2. I save the database into a POSTGRES DB
- 
-To Run the code.
-
-1. Install virtualenv
-
-$ pip install virtualenv
-
-2. Create a virtual environment for the project
-
-$ cd transfix-api
-$ virtualenv transfix-api
-
-3. Install the necessary requirements
-
-$ pip install -r requirements.txt
-
-Run the file data_generator.py to generate the data to be consumed by the API
-
-Then in two separate command lines, run vurb_api_nt.py and vurb_combined_api_nt.py
-
-Open a browser, or curl the following API call
-
-http://localhost:6000/users/x/combineddecks?pages=<numpages>&results=<numresultsperpage>&nextPageToken=1
-
-I assume we can open both 5000 and 6000 ports to run our flask servers.
-
-The final response will be saved in response.txt
+2. I save the shipment object into a postgres database, and the microservice is installed on Heroku 
+3. I use the Python Flask library to create the microservice and flask-restful library to create the rest endpoints.
+4. I use the flask-sqlalchemy library to create Database models for the shipment object, and marshmallow library to parse and validate incoming
+   JSON requests.
+5. Basic validation and sanity checks are included, such as check for missing attributes in POST and PUT requests, to check float values > 0 for
+cost and distance.
+6. Basic error handling for API Requests (e.g, POST on already existing object, GET on non-existing object etc.)
+7. Concurrent API requests handling is supported

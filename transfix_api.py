@@ -192,6 +192,7 @@ def returnJSON(reqtype,rettype,shipment_name=None):
 
 #API Endpoints for the Shipping API
 api.add_resource(ShipmentAPI, '/shipment',endpoint='postshipment')
+api.add_resource(ShipmentAPI, '/shipment',endpoint='putshipment')
 api.add_resource(ShipmentAPI, '/shipment/<shipment_name>',endpoint='getshipment')
 api.add_resource(ShipmentAPI,'/shipment/<shipment_name>',endpoint='deleteshipment')
 

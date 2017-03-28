@@ -1,47 +1,85 @@
 import requests
-import random
 
-def decomposition(i):
-        while i > 0:
-            n = random.randint(1, i)
-            yield n
-            i -= n
-def generator():
-    for i in range(0,1):
-        shipment_name = "shipment_"+str(i)
-        total_price = 0
-        for j in range(0,10):
-            total_price += random.randint(100,1000)
-        total_price_bef = total_price/random.randint(10,100)
-        segment_distances = list(decomposition(total_price))
-        payload = { 
-                "shipment_name":shipment_name,
-                "total_price":total_price_bef,
-                "segment_distances": segment_distances
-            }
-        requests.post('http://localhost:5000/shipment', json=payload)
 
-#generator()
-payload1 = { 
+#POST PAYLOAD
+payloadpost = {
             "shipment_name":"shipment_test",
             "total_price":150,
             "segment_distances": [1.0,5.0]
         }
-payload2 = { 
+
+#Put payload
+payloadput = { 
             "shipment_name":"shipment_test",
             "total_price":200,
-            "segment_distances": [1.0,5.0]
+            "segment_distances": [2.0,3.0]
         }
-rda = requests.delete('http://localhost:5000/shipment')
-print rda.text
-'''rpo = requests.post('http://localhost:5000/shipment', json=payload1)
-print rpo.json()
-rg1 = requests.get('http://localhost:5000/shipment/shipment_test')
-print rg1.text
-rpu = requests.put('http://localhost:5000/shipment',json=payload2)
-print rpu.text
-rg2 = requests.get('http://localhost:5000/shipment/shipment_test')
-print rg2.text'''
-#rdp = requests.delete('http://localhost:5000/shipment/shipment_1')
-#rda = requests.delete('http://localhost:5000/shipment')
+
+#Request to delete all shipments
+reqdelall = requests.delete('https://obscure-wave-96442.herokuapp.com/shipment')
+print reqdelall.text
+
+'''Output
+{
+  "Success": "All Shipments successfully deleted"
+}'''
+
+#Request to post shipment
+reqpost = requests.post('https://obscure-wave-96442.herokuapp.com/shipment', json=payloadpost)
+print reqpost.text
+
+'''Output
+{
+  "Success": "Shipment with name shipment_test successfully created"
+}'''
+
+#Request to get just posted shipment
+reqget1 = requests.get('https://obscure-wave-96442.herokuapp.com/shipment/shipment_test')
+print reqget1.text
+
+'''Output
+{
+    "cost_breakdown": [
+        25.0,
+        125.0
+    ],
+    "segment_distances": [
+        1.0,
+        5.0
+    ],
+    "shipment_name": "shipment_test",
+    "total_price": 150
+}
+'''
+
+#Request to update just posted shipment via put
+reqput = requests.put('https://obscure-wave-96442.herokuapp.com/shipment',json=payloadput)
+print reqput.text
+
+'''Output
+{
+  "Success": "Shipment with name shipment_test successfully updated"
+}'''
+
+#Request to get just updated shipment
+reqget2 = requests.get('https://obscure-wave-96442.herokuapp.com/shipment/shipment_test')
+print reqget2.text
+
+'''Output: updated shipment
+{
+    "cost_breakdown": [
+        80.0,
+        120.0
+    ],
+    "segment_distances": [
+        2.0,
+        3.0
+    ],
+    "shipment_name": "shipment_test",
+    "total_price": 200
+}'''
+
+#Request to delete posted shipment
+reqdel = requests.delete('https://obscure-wave-96442.herokuapp.com/shipment/shipment_test')
+print reqdel.text
 
