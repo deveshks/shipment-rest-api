@@ -1,5 +1,5 @@
 The following document contains the details of the API endpoints and the HTTP Microservice to store shipments.
-The microservice is available at https://obscure-wave-96442.herokuapp.com
+The microservice is deployed on Heroku using a PostgreSQL database and is available at https://obscure-wave-96442.herokuapp.com
 
 A sequence of  API calls covering all possible endpoints are provided in apihitter.py which does the following calls in sequence
 
@@ -15,7 +15,8 @@ Steps to run the API endpoint tester code.
 $ pip install requests
 $ python apihitter.py
 
-The details of the implemented API's as follows. All the API's are defined and written following the standard of flask-restful package of Python Flask. 
+The details of the implemented API's as follows. All the API's are defined and written following the standard of flask-restful package 
+of Python Flask. 
 	
 1. GET /shipment/<shipment_name>
 e.g. GET e.g. https://obscure-wave-96442.herokuapp.com/shipment/shipment_test

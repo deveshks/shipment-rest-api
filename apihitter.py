@@ -40,15 +40,15 @@ print reqget1.text
 '''Output
 {
     "cost_breakdown": [
-        25.0,
-        125.0
+        27.36,
+        123.14
     ],
     "segment_distances": [
-        1.0,
-        5.0
+        1.2,
+        5.4
     ],
     "shipment_name": "shipment_test",
-    "total_price": 150
+    "total_price": 150.5
 }
 '''
 
@@ -68,18 +68,17 @@ print reqget2.text
 '''Output: updated shipment
 {
     "cost_breakdown": [
-        80.0,
-        120.0
+        86.48,
+        114.27
     ],
     "segment_distances": [
-        2.0,
-        3.0
+        2.8,
+        3.7
     ],
     "shipment_name": "shipment_test",
-    "total_price": 200
+    "total_price": 200.75
 }'''
 
 #Request to delete posted shipment
 reqdel = requests.delete('https://obscure-wave-96442.herokuapp.com/shipment/shipment_test')
 print reqdel.text
-
